@@ -1,0 +1,2610 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/bff/v1/indicatorvalueglobal.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "IndicatorValueService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/indicatorValues/globals": {
+      "get": {
+        "summary": "全院列表",
+        "operationId": "IndicatorValueService_GlobalList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalListReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "orgCode",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/doctors/main": {
+      "get": {
+        "summary": "全院详情页-各类医师-主表",
+        "operationId": "IndicatorValueService_GlobalDetailDoctorMain",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalListReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/incomes": {
+      "get": {
+        "summary": "医疗服务收入占比： 全院各类收入占比 全院医疗服务收入占比",
+        "operationId": "IndicatorValueService_GlobalDetailCategoryIncomes",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailCategoryIncomesReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/incomes/{category}": {
+      "get": {
+        "summary": "医疗服务收入占比 门诊/住院各项收入占比",
+        "operationId": "IndicatorValueService_GlobalDetailCategoryIncomeDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailCategoryIncomeDetailReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/incomes/{category}/depts": {
+      "get": {
+        "summary": "医疗服务收入占比 科室门诊/住院医疗服务收入",
+        "operationId": "IndicatorValueService_GlobalDetailCategoryIncomeDeptDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailDeptsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/singleDisease/depts": {
+      "get": {
+        "summary": "全院详情页-单病种-科室情况分析：分页及排序",
+        "operationId": "IndicatorValueService_GlobalDetailSingleDiseaseDepts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailSingleDiseaseDeptsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "indicator",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/singleDisease/dps": {
+      "get": {
+        "summary": "全院详情页-单病种-治疗组情况分析：分页及排序",
+        "operationId": "IndicatorValueService_GlobalDetailSingleDiseaseDoctorGroups",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailSingleDiseaseDoctorGroupsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "indicator",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/singleDisease/main": {
+      "get": {
+        "summary": "全院详情页-单病种-主表",
+        "operationId": "IndicatorValueService_GlobalDetailSingleDiseaseMain",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailSingleDiseaseMainReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/tumour/depts": {
+      "get": {
+        "summary": "全院详情页-单病种-科室情况分析：分页及排序",
+        "operationId": "IndicatorValueService_GlobalDetailTumourDepts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailTumourDeptsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "indicator",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/tumour/dps": {
+      "get": {
+        "summary": "全院详情页-单病种-治疗组情况分析：分页及排序",
+        "operationId": "IndicatorValueService_GlobalDetailTumourDoctorGroups",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailTumourDoctorGroupsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "indicator",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/tumour/main": {
+      "get": {
+        "summary": "全院详情页-单病种-主表",
+        "operationId": "IndicatorValueService_GlobalDetailTumourMain",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailTumourMainReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/{id}/depts": {
+      "get": {
+        "summary": "全院详情页-科室情况分析：分页及排序",
+        "operationId": "IndicatorValueService_GlobalDetailDepts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailDeptsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "desc",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/{id}/dgs": {
+      "get": {
+        "summary": "全院详情页-治疗组台次数排名",
+        "operationId": "IndicatorValueService_GlobalDetailDoctorGroup",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailDoctorGroupReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/{id}/doctors": {
+      "get": {
+        "summary": "全院详情页-医生情况分析：分页及排序",
+        "operationId": "IndicatorValueService_GlobalDetailDoctors",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailDoctorsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "desc",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/{id}/doctors/sort": {
+      "get": {
+        "summary": "全院详情页-医生指标排名：分页及排序",
+        "operationId": "IndicatorValueService_GlobalDetailDoctorsSort",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailDoctorsSortReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "desc",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/{id}/groups": {
+      "get": {
+        "summary": "全院详情页-治疗组情况分析：分页及排序",
+        "operationId": "IndicatorValueService_GlobalDetailGroups",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailGroupsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "desc",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/{id}/indicators": {
+      "get": {
+        "summary": "全院详情页-相关要素情况分析(用子指标实现，用于门诊/住院费用增幅)",
+        "operationId": "IndicatorValueService_GlobalDetailChildrenIndicator",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailCategoryIncomeDetailReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/{id}/main": {
+      "get": {
+        "summary": "全院详情页-主表",
+        "operationId": "IndicatorValueService_GlobalDetailMain",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailMainReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/{id}/months": {
+      "get": {
+        "summary": "全院详情页-月度累计",
+        "operationId": "IndicatorValueService_GlobalDetailMonthSummary",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailMonthSummaryReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/{id}/numberator/depts": {
+      "get": {
+        "summary": "全院详情页-分子值科室情况分析：分页及排序",
+        "operationId": "IndicatorValueService_GlobalDetailNumberatorDepts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailDeptsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "desc",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "onlyUnqualified",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/{id}/numberator/dgs": {
+      "get": {
+        "summary": "全院详情页-分子值治疗组情况分析：分页及排序",
+        "operationId": "IndicatorValueService_GlobalDetailNumberatorDgs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailGroupsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "desc",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "onlyUnqualified",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/{id}/surgeries": {
+      "get": {
+        "summary": "全院详情页-手术名称台次数排名",
+        "operationId": "IndicatorValueService_GlobalDetailSurgery",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailSurgeryReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/{id}/surgerySort/dept": {
+      "get": {
+        "summary": "科室手术台次数排名",
+        "operationId": "IndicatorValueService_GlobalDetailDeptSurgeryNumSort",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailDeptSurgeryNumSortReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "desc",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    },
+    "/api/v1/indicatorValues/globals/{id}/surgerySort/doctor": {
+      "get": {
+        "summary": "医师手术台次数排名",
+        "operationId": "IndicatorValueService_GlobalDetailDoctorSurgeryNumSort",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GlobalDetailDoctorSurgeryNumSortReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "orgId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "beginDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "desc",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "IndicatorValueService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "GlobalDetailDeptsReplyDepts": {
+      "type": "object",
+      "properties": {
+        "deptId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "deptName": {
+          "type": "string"
+        },
+        "actualValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "targetValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "GlobalListReplyGlobal": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "seq": {
+          "type": "number",
+          "format": "double"
+        },
+        "isImport": {
+          "type": "boolean"
+        },
+        "showFlag": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "showDetails": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "showFactor": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "masterId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "category1": {
+          "type": "string"
+        },
+        "category2": {
+          "type": "string"
+        },
+        "category3": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "attr": {
+          "type": "string"
+        },
+        "guide": {
+          "type": "string"
+        },
+        "valueType": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "numberatorName": {
+          "type": "string"
+        },
+        "denominatorName": {
+          "type": "string"
+        },
+        "numberatorSql": {
+          "type": "string"
+        },
+        "denominatorSql": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "moreContents": {
+          "type": "string"
+        },
+        "pageDetail": {
+          "type": "object"
+        },
+        "targetValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff": {
+          "type": "number",
+          "format": "double"
+        },
+        "masterName": {
+          "type": "string"
+        },
+        "masterMergeFlag": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "masterShowFlag": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "masterSeq": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "masterScore": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "numberatorTarget": {
+          "type": "number",
+          "format": "double"
+        },
+        "numberatorValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "numberatorDiff": {
+          "type": "number",
+          "format": "double"
+        },
+        "denominatorValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "listType": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "subMasterId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "subMasterName": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "protobufNullValue": {
+      "type": "string",
+      "enum": [
+        "NULL_VALUE"
+      ],
+      "default": "NULL_VALUE",
+      "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\n The JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value."
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1GlobalDetailCategoryIncomeDetailReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailCategoryIncomeDetailReplyItem"
+          }
+        }
+      }
+    },
+    "v1GlobalDetailCategoryIncomeDetailReplyItem": {
+      "type": "object",
+      "properties": {
+        "indicatorId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "indicatorName": {
+          "type": "string"
+        },
+        "guide": {
+          "type": "string"
+        },
+        "target": {
+          "type": "number",
+          "format": "double"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailCategoryIncomesReply": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailCategoryIncomesReplyItem"
+          },
+          "title": "category 表示：检查检验收入，卫生材料收入，医疗服务收入，药品收入 分类"
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailCategoryIncomesReplyItem"
+          },
+          "title": "type 表示：门诊，住院 分类"
+        }
+      }
+    },
+    "v1GlobalDetailCategoryIncomesReplyItem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailDeptSurgeryNumSortReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailDeptSurgeryNumSortReplyItem"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GlobalDetailDeptSurgeryNumSortReplyItem": {
+      "type": "object",
+      "properties": {
+        "deptId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "deptCode": {
+          "type": "string"
+        },
+        "deptName": {
+          "type": "string"
+        },
+        "surgeryNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "lvFourSurgeryNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "miniOpSurgeryNum": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GlobalDetailDeptsReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/GlobalDetailDeptsReplyDepts"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "qualified": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unqualified": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GlobalDetailDoctorGroupReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailDoctorGroupReplyItem"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GlobalDetailDoctorGroupReplyItem": {
+      "type": "object",
+      "properties": {
+        "dgId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "dgName": {
+          "type": "string"
+        },
+        "surgeryNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "lvFourSurgeryNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "miniOpSurgeryNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "dgCode": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GlobalDetailDoctorSurgeryNumSortReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailDoctorSurgeryNumSortReplyItem"
+          }
+        },
+        "reportList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailDoctorSurgeryNumSortReplySecondItem"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "reportZero": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GlobalDetailDoctorSurgeryNumSortReplyItem": {
+      "type": "object",
+      "properties": {
+        "doctorId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "deptName": {
+          "type": "string"
+        },
+        "doctorCode": {
+          "type": "string"
+        },
+        "doctorName": {
+          "type": "string"
+        },
+        "surgeryNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "lvFourSurgeryNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "miniOpSurgeryNum": {
+          "type": "string",
+          "format": "int64"
+        },
+        "lastYearSurgeryNum": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GlobalDetailDoctorSurgeryNumSortReplySecondItem": {
+      "type": "object",
+      "properties": {
+        "doctorId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "deptName": {
+          "type": "string"
+        },
+        "doctorCode": {
+          "type": "string"
+        },
+        "doctorName": {
+          "type": "string"
+        },
+        "percentage": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailDoctorsReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailDoctorsReplyDoctors"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GlobalDetailDoctorsReplyDoctors": {
+      "type": "object",
+      "properties": {
+        "doctorId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "doctorName": {
+          "type": "string"
+        },
+        "actualValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "targetValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailDoctorsSortReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailDoctorsSortReplyItem"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GlobalDetailDoctorsSortReplyItem": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "deptName": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailGroupsReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailGroupsReplyGroups"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "qualified": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unqualified": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GlobalDetailGroupsReplyGroups": {
+      "type": "object",
+      "properties": {
+        "dgId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "dgName": {
+          "type": "string"
+        },
+        "actualValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "targetValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailMainReply": {
+      "type": "object",
+      "properties": {
+        "past": {
+          "type": "number",
+          "format": "double"
+        },
+        "pastNumberator": {
+          "type": "number",
+          "format": "double"
+        },
+        "pastDenominator": {
+          "type": "number",
+          "format": "double"
+        },
+        "target": {
+          "type": "number",
+          "format": "double"
+        },
+        "targetNumberator": {
+          "type": "number",
+          "format": "double"
+        },
+        "targetDenominator": {
+          "type": "number",
+          "format": "double"
+        },
+        "cur": {
+          "type": "number",
+          "format": "double"
+        },
+        "curNumberator": {
+          "type": "number",
+          "format": "double"
+        },
+        "curDenominator": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff": {
+          "type": "number",
+          "format": "double"
+        },
+        "diffNumberator": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailMonthSummaryReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailMonthSummaryReplyTuple"
+          }
+        }
+      }
+    },
+    "v1GlobalDetailMonthSummaryReplyTuple": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "sizeTarget": {
+          "type": "number",
+          "format": "double"
+        },
+        "sizeValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "sizeDiff": {
+          "type": "number",
+          "format": "double"
+        },
+        "ratioTarget": {
+          "type": "number",
+          "format": "double"
+        },
+        "ratioValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "ratioDiff": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailSingleDiseaseDeptsReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailSingleDiseaseDeptsReplyItem"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GlobalDetailSingleDiseaseDeptsReplyItem": {
+      "type": "object",
+      "properties": {
+        "deptId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "deptName": {
+          "type": "string"
+        },
+        "singleDiseaseName": {
+          "type": "string"
+        },
+        "target": {
+          "type": "number",
+          "format": "double"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailSingleDiseaseDoctorGroupsReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailSingleDiseaseDoctorGroupsReplyItem"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GlobalDetailSingleDiseaseDoctorGroupsReplyItem": {
+      "type": "object",
+      "properties": {
+        "dgId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "dgName": {
+          "type": "string"
+        },
+        "singleDiseaseName": {
+          "type": "string"
+        },
+        "target": {
+          "type": "number",
+          "format": "double"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailSingleDiseaseMainReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailSingleDiseaseMainReplyItem"
+          }
+        }
+      }
+    },
+    "v1GlobalDetailSingleDiseaseMainReplyItem": {
+      "type": "object",
+      "properties": {
+        "singleDiseaseName": {
+          "type": "string"
+        },
+        "sizeTarget": {
+          "type": "number",
+          "format": "double"
+        },
+        "sizeValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "sizeDiff": {
+          "type": "number",
+          "format": "double"
+        },
+        "avgStayTarget": {
+          "type": "number",
+          "format": "double"
+        },
+        "avgStayValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "avgStayDiff": {
+          "type": "number",
+          "format": "double"
+        },
+        "avgPriceTarget": {
+          "type": "number",
+          "format": "double"
+        },
+        "avgPriceValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "avgPriceDiff": {
+          "type": "number",
+          "format": "double"
+        },
+        "deadTarget": {
+          "type": "number",
+          "format": "double"
+        },
+        "deadValue": {
+          "type": "number",
+          "format": "double"
+        },
+        "deadDiff": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailSurgeryReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailSurgeryReplyItem"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GlobalDetailSurgeryReplyItem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        },
+        "code": {
+          "type": "string"
+        },
+        "lastYearValue": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailTumourDeptsReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailTumourDeptsReplyItem"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GlobalDetailTumourDeptsReplyItem": {
+      "type": "object",
+      "properties": {
+        "deptId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "deptName": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "target": {
+          "type": "number",
+          "format": "double"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailTumourDoctorGroupsReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailTumourDoctorGroupsReplyItem"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1GlobalDetailTumourDoctorGroupsReplyItem": {
+      "type": "object",
+      "properties": {
+        "dgId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "dgName": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "target": {
+          "type": "number",
+          "format": "double"
+        },
+        "value": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalDetailTumourMainReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalDetailTumourMainReplyItem"
+          }
+        }
+      }
+    },
+    "v1GlobalDetailTumourMainReplyItem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "target1": {
+          "type": "number",
+          "format": "double"
+        },
+        "value1": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff1": {
+          "type": "number",
+          "format": "double"
+        },
+        "target2": {
+          "type": "number",
+          "format": "double"
+        },
+        "value2": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff2": {
+          "type": "number",
+          "format": "double"
+        },
+        "target3": {
+          "type": "number",
+          "format": "double"
+        },
+        "value3": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff3": {
+          "type": "number",
+          "format": "double"
+        },
+        "target4": {
+          "type": "number",
+          "format": "double"
+        },
+        "value4": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff4": {
+          "type": "number",
+          "format": "double"
+        },
+        "target5": {
+          "type": "number",
+          "format": "double"
+        },
+        "value5": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff5": {
+          "type": "number",
+          "format": "double"
+        },
+        "target6": {
+          "type": "number",
+          "format": "double"
+        },
+        "value6": {
+          "type": "number",
+          "format": "double"
+        },
+        "diff6": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1GlobalListReply": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/GlobalListReplyGlobal"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "niceCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "badCount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "singleDiseases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalListReplyBadIndicatorStat"
+          }
+        },
+        "tumours": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1GlobalListReplyBadIndicatorStat"
+          }
+        },
+        "badNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "v1GlobalListReplyBadIndicatorStat": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "diseaseNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

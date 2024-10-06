@@ -1,0 +1,135 @@
+// api.ts
+
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ref } from 'vue';
+
+// 创建 Axios 实例
+const apiClient: AxiosInstance = axios.create({
+  baseURL: 'https://api.example.com', // 替换为你的API基础URL
+  timeout: 10000, // 请求超时
+});
+
+{% if interceptors %}
+// 拦截器实现
+
+axios.interceptors.request.use(
+  config => {
+    // 添加拦截器逻辑
+    console.log('Request made with ', config);
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  response => {
+    // 添加拦截器逻辑
+    console.log('Response received', response);
+    return response;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+{% endif %}
+
+{% if caching %}
+// 缓存实现
+
+// Service Worker 缓存
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(registration => {
+      console.log('Service Worker registered with scope:', registration.scope);
+    })
+    .catch(error => {
+      console.log('Service Worker registration failed:', error);
+    });
+}
+
+// 强制缓存
+function setCache(key: string, data: any) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+function getCache(key: string): any | null {
+  const cached = localStorage.getItem(key);
+  return cached ? JSON.parse(cached) : null;
+}
+
+// 协商缓存（示例：使用 ETag）
+axios.interceptors.request.use(
+  config => {
+    const cachedResponse = localStorage.getItem(`etag_${config.url}`);
+    if (cachedResponse) {
+      config.headers['If-None-Match'] = cachedResponse;
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  response => {
+    if (response.headers.etag) {
+      localStorage.setItem(`etag_${response.config.url}`, response.headers.etag);
+    }
+    return response;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
+// Web Storage 缓存
+// 已在 setCache 和 getCache 函数中实现
+{% endif %}
+
+{% for func in functions %}
+export function {{ func.name }}({% if func.use_struct_param %}params: {{ func.request_struct }}{% else %}{% for param in func.parameters %}{{ param.name }}: {{ param.ty }}{% if not loop.last %},{% endif %}{% endfor %}{% endif %}) {
+  const {{ func.name }}Data = ref<{{ func.return_type }} | null>(null);
+  const {{ func.name }}Error = ref<string | null>(null);
+  const {{ func.name }}Loading = ref<boolean>(false);
+
+  async function {{func.name}}Execute() {
+    {{ func.name }}Loading.value = true;
+    {{ func.name }}Error.value = null;{% if caching %}
+                                                                                                                                                                                               // 创建缓存键
+    const cacheKey = `{{ func.name }}:${JSON.stringify({% if func.use_struct_param %}params{% else %}{ {% for param in func.parameters %}{{ param.name }}: {{ param.name }}{% if not loop.last %},{% endif %}{% endfor %} }{% endif %})}`;
+
+    // 检查缓存
+    const cachedData = getCache(cacheKey);
+    if (cachedData) {
+      {{ func.name }}Data.value = cachedData;
+      {{ func.name }}Loading.value = false;
+      return;
+    }{% endif %}
+
+    try {
+      const response = await {{ func.service }}Api.{{ func.operation_id }}({% if func.method == "get" or func.method == "delete" %}{
+        {% if func.use_struct_param %}...params{% else %}{% for param in func.parameters %}{% if param.location == "query" %}{{ param.name ~ ": " ~ param.name ~ "," }}{% else %}{{ "" }}{% endif %}{% endfor %}{% endif %}
+      }{% elif func.method == "post" or func.method == "put" %} {% if func.use_struct_param %}params{% else %}{
+        {% for param in func.parameters %}{{ param.name }}: {{ param.name }}{% if not loop.last %}, {% endif %}{% endfor %}
+      }{% endif %}{% endif %});
+      {{ func.name }}Data.value = response.data;{% if caching %}
+      setCache(cacheKey, response.data);{% endif %}
+    } catch (err: any) {
+      {{ func.name }}Error.value = err.message || 'An error occurred';
+    } finally {
+      {{ func.name }}Loading.value = false;
+    }
+  }
+
+  return {
+    {{ func.name }}Data,
+    {{ func.name }}Error,
+    {{ func.name }}Loading,
+    {{ func.name}}Execute,
+  };
+}
+{% endfor %}
+

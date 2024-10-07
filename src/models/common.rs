@@ -12,4 +12,12 @@ pub struct Args {
     /// 输出 TypeScript 文件路径
     #[arg(short, long)]
     pub output: String,
+
+    /// 输出的app名称
+    #[arg(short, long)]
+    pub app_name: String,
+
+    /// 对端的app名称
+    #[arg(short, long)]
+    pub peer_name: String,
 }

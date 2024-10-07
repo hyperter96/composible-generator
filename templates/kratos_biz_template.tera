@@ -10,19 +10,19 @@ import (
 
 {% for func in functions %}// {{ func.request_struct }}Param struct represents the request parameters for {{ func.name }} API
 type {{ func.request_struct }}Param struct {
-{% for parameter in func.request_parameters %}{% if parameter.required %}  {{ parameter.name | capitalize }} {{ parameter.ty }}{% else %}  {{ parameter.name | capitalize }} *{{ parameter.ty }}{% endif %}
+{% for parameter in func.request_parameters %}{% if parameter.required %}  {{ parameter.name | camel_case_upper }} {{ parameter.ty }}{% else %}  {{ parameter.name | camel_case_upper }} *{{ parameter.ty }}{% endif %}
 {% endfor %}}
 
 {% endfor %}
 {% for func in functions %}{% if func.reveal_struct %}// {{ func.return_type }}Param struct represents the reply parameters for {{ func.name }} API
 type {{ func.return_type }}Param struct {
-{% for parameter in func.response_parameters %}  {{ parameter.name | capitalize }} {{ parameter.ty }}
+{% for parameter in func.response_parameters %}  {{ parameter.name | camel_case_upper }} {{ parameter.ty }}
 {% endfor %}}{% endif %}
 
 {% endfor %}
 
 {% for key, item in items %}type {{ key }} struct {
-{% for parameter in item %}  {{ parameter.name | capitalize }}  {{parameter.ty}}
+{% for parameter in item %}  {{ parameter.name | camel_case_upper }}  {{ parameter.ty }}
 {% endfor %}}
 
 {% endfor %}

@@ -1,1 +1,1 @@
-pub mod biz;
+pub mod kratos_biz;

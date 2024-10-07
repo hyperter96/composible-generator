@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 mod generator;
-use generator::biz::generate_biz_from_swagger;
+use generator::kratos_biz::generate_biz_from_swagger;
 mod models;
 mod utils;
 use crate::models::common::Args;

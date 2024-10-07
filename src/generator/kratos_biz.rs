@@ -2,7 +2,9 @@ use crate::models::common::Args;
 use crate::models::swagger::{
     ComposableFunction, Definition, FunctionParameter, FunctionReturn, OpenAPI, Schema,
 };
-use crate::utils::convert::{extract_method_name, insert_if_absent, to_camel_case_upper};
+use crate::utils::convert::{
+    extract_method_name, insert_if_absent, insert_underscore_after_substring, to_camel_case_upper,
+};
 use crate::utils::filter::{camel_case_filter, camel_case_initial_upper_filter, snake_case_filter};
 use inflector::cases::camelcase::to_camel_case;
 use std::collections::HashMap;
@@ -11,6 +13,9 @@ use std::io::Read;
 use tera::{Context, Tera};
 
 fn get_return_type(schema: &Schema) -> String {
+    if Some(schema).is_none() {
+        return "any".to_string();
+    }
     if let Some(ref_path) = &schema.ref_path {
         // 提取引用类型名
         if let Some(pos) = ref_path.find("v1") {
@@ -65,6 +70,7 @@ fn get_return_type(schema: &Schema) -> String {
 }
 
 fn get_item_type(
+    return_type: &str,
     item_map: &mut HashMap<String, Vec<FunctionReturn>>,
     properties: &HashMap<String, Schema>,
     definitions: &HashMap<String, Definition>,
@@ -92,15 +98,28 @@ fn get_item_type(
                 .unwrap()
                 .iter()
                 .for_each(|(k, v)| {
+                    let sub_ty =
+                        get_return_type(v.schema.as_ref().unwrap_or(&Box::new(Schema::default())));
                     item_map
                         .entry(return_ty.clone())
                         .or_default()
                         .push(FunctionReturn {
                             name: k.to_string(),
                             ty: get_return_type(v),
+                            sub_proto_ty: insert_underscore_after_substring(&sub_ty, return_type),
+                            sub_ty,
+                            tp: v.ty.clone().unwrap_or_else(|| "any".to_string()),
+                            sub_tp: v
+                                .schema
+                                .as_ref()
+                                .unwrap_or(&Box::new(Schema::default()))
+                                .ty
+                                .clone()
+                                .unwrap_or_else(|| "any".to_string()),
                         });
                 });
             get_item_type(
+                return_type,
                 item_map,
                 definitions.get(&ty).unwrap().properties.as_ref().unwrap(),
                 definitions,
@@ -134,12 +153,28 @@ fn get_item_type(
                     .unwrap()
                     .iter()
                     .for_each(|(k, v)| {
+                        let sub_ty = get_return_type(
+                            v.schema.as_ref().unwrap_or(&Box::new(Schema::default())),
+                        );
                         item_map
                             .entry(return_ty.clone())
                             .or_default()
                             .push(FunctionReturn {
                                 name: k.to_string(),
                                 ty: get_return_type(v),
+                                sub_proto_ty: insert_underscore_after_substring(
+                                    &sub_ty,
+                                    return_type,
+                                ),
+                                sub_ty,
+                                tp: v.ty.clone().unwrap_or_else(|| "any".to_string()),
+                                sub_tp: v
+                                    .schema
+                                    .as_ref()
+                                    .unwrap_or(&Box::new(Schema::default()))
+                                    .ty
+                                    .clone()
+                                    .unwrap_or_else(|| "any".to_string()),
                             });
                     });
                 record_map.insert(return_ty.clone(), true);
@@ -243,6 +278,20 @@ pub fn generate_biz_from_swagger(args: &Args) -> Result<(), Box<dyn std::error::
                         req_params.push(FunctionParameter {
                             name: to_camel_case(&param.name),
                             ty,
+                            sub_ty: get_return_type(
+                                param
+                                    .schema
+                                    .as_ref()
+                                    .unwrap_or(&Box::new(Schema::default())),
+                            ),
+                            tp: param.ty.clone().unwrap_or_else(|| "any".to_string()),
+                            sub_tp: param
+                                .schema
+                                .as_ref()
+                                .unwrap_or(&Box::new(Schema::default()))
+                                .ty
+                                .clone()
+                                .unwrap_or_else(|| "any".to_string()),
                             required: param.required.unwrap_or(false),
                             location: param.location.clone(),
                         });
@@ -309,16 +358,76 @@ pub fn generate_biz_from_swagger(args: &Args) -> Result<(), Box<dyn std::error::
                 {
                     func.response_parameters = properties
                         .iter()
-                        .map(|(property_name, property_schema)| FunctionReturn {
-                            name: to_camel_case_upper(property_name),
-                            ty: get_return_type(property_schema),
+                        .map(|(property_name, property_schema)| {
+                            let sub_ty = get_return_type(
+                                property_schema
+                                    .schema
+                                    .as_ref()
+                                    .unwrap_or(&Box::new(Schema::default())),
+                            );
+                            FunctionReturn {
+                                name: to_camel_case_upper(property_name),
+                                ty: get_return_type(property_schema),
+                                sub_proto_ty: insert_underscore_after_substring(
+                                    &sub_ty,
+                                    &return_type,
+                                ),
+                                sub_ty,
+                                tp: property_schema
+                                    .ty
+                                    .clone()
+                                    .unwrap_or_else(|| "any".to_string()),
+                                sub_tp: property_schema
+                                    .schema
+                                    .as_ref()
+                                    .unwrap_or(&Box::new(Schema::default()))
+                                    .ty
+                                    .clone()
+                                    .unwrap_or_else(|| "any".to_string()),
+                            }
                         })
                         .collect();
                     insert_if_absent(&mut resp_map, return_type.clone(), func.name.clone());
-                    get_item_type(&mut item_map, properties, &openapi.definitions);
+                    get_item_type(
+                        &return_type,
+                        &mut item_map,
+                        properties,
+                        &openapi.definitions,
+                    );
                 } else if Some(return_type.clone()) == func.return_type
                     && resp_map.contains_key(return_type.clone().as_str())
                 {
+                    func.response_parameters = properties
+                        .iter()
+                        .map(|(property_name, property_schema)| {
+                            let sub_ty = get_return_type(
+                                property_schema
+                                    .schema
+                                    .as_ref()
+                                    .unwrap_or(&Box::new(Schema::default())),
+                            );
+                            FunctionReturn {
+                                name: to_camel_case_upper(property_name),
+                                ty: get_return_type(property_schema),
+                                sub_proto_ty: insert_underscore_after_substring(
+                                    &sub_ty,
+                                    &return_type,
+                                ),
+                                sub_ty,
+                                tp: property_schema
+                                    .ty
+                                    .clone()
+                                    .unwrap_or_else(|| "any".to_string()),
+                                sub_tp: property_schema
+                                    .schema
+                                    .as_ref()
+                                    .unwrap_or(&Box::new(Schema::default()))
+                                    .ty
+                                    .clone()
+                                    .unwrap_or_else(|| "any".to_string()),
+                            }
+                        })
+                        .collect();
                     func.reveal_struct = false
                 }
             });
@@ -356,14 +465,26 @@ pub fn generate_biz_from_swagger(args: &Args) -> Result<(), Box<dyn std::error::
     context.insert("service", &service_name);
     context.insert("items", &item_map);
     context.insert("found_struct", &found_struct);
+    context.insert("app", &args.app_name);
+    context.insert("peer", &args.peer_name);
 
     // Step 7: 渲染模板
-    let rendered = tera.render("biz_template.tera", &context)?;
+    let rendered_biz = tera.render("kratos_biz_template.tera", &context)?;
+    let rendered_service = tera.render("kratos_service_template.tera", &context)?;
+    let rendered_data = tera.render("kratos_data_template.tera", &context)?;
 
-    // Step 8: 写入生成的 biz_template 文件
-    let mut output_file = File::create(&args.output)?;
     use std::io::Write;
-    output_file.write_all(rendered.as_bytes())?;
+    // Step 8.1: 写入生成的 data_template 文件
+    let mut output_file_data = File::create(args.output.to_string() + "/data.go")?;
+    output_file_data.write_all(rendered_data.as_bytes())?;
+
+    // Step 8.2: 写入生成的 service_template 文件
+    let mut output_file_service = File::create(args.output.to_string() + "/service.go")?;
+    output_file_service.write_all(rendered_service.as_bytes())?;
+
+    // Step 8.3: 写入生成的 biz_template 文件
+    let mut output_file_biz = File::create(args.output.to_string() + "/biz.go")?;
+    output_file_biz.write_all(rendered_biz.as_bytes())?;
 
     println!("biz层函数已生成到 output/composables/biz.go");
 

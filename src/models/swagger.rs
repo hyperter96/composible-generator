@@ -53,7 +53,7 @@ pub struct Parameter {
     pub schema: Option<Schema>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Default)]
 pub struct Schema {
     #[serde(rename = "type")]
     pub ty: Option<String>,
@@ -82,6 +82,9 @@ pub struct MediaType {
 pub struct FunctionParameter {
     pub name: String,
     pub ty: String,
+    pub sub_ty: String,
+    pub tp: String,
+    pub sub_tp: String,
     pub required: bool,
     pub location: String,
 }
@@ -91,6 +94,10 @@ pub struct FunctionParameter {
 pub struct FunctionReturn {
     pub name: String,
     pub ty: String,
+    pub sub_ty: String,
+    pub sub_proto_ty: String,
+    pub tp: String,
+    pub sub_tp: String,
 }
 
 // 定义传递给模板的数据结构
@@ -103,15 +110,4 @@ pub struct ComposableFunction {
     pub response_parameters: Vec<FunctionReturn>,
     pub reveal_struct: bool,
     pub return_type: Option<String>,
-}
-
-impl Default for Schema {
-    fn default() -> Self {
-        Schema {
-            ty: None,
-            format: None,
-            ref_path: None,
-            schema: None,
-        }
-    }
 }

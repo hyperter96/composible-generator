@@ -1,0 +1,39 @@
+package service
+
+import (
+	"context"
+  v1 "pion/api/{{ app }}/v1"
+  "pion/app/{{ app }}/internal/biz"
+	"pion/pkg/util"
+
+	"github.com/go-kratos/kratos/v2/errors"
+	"github.com/go-kratos/kratos/v2/log"
+)
+
+type {{ service | camel_case_upper }} struct {
+  v1.Unimplemented{{ service | camel_case_upper }}Server
+  uc *biz.{{ service | camel_case_upper }}Usecase
+  log *log.Helper
+}
+
+func New{{ service | camel_case_upper }}(uc *biz.{{ service | camel_case_upper }}, logger log.Logger) *{{ service | camel_case_upper }} {
+  return &{{ service | camel_case_upper }}{
+    log: log.NewHelper(log.With(logger, "module", "service/{{ service | camel_case_upper }}")),
+    uc: uc,
+  }
+}
+
+{% for func in functions %}
+func (s *{{ service | camel_case_upper }}) {{ func.name }}(ctx context.Context, req *v1.{{ func.request_struct }}) (*v1.{{ func.return_type }}, error) {
+  reply, err := s.uc.{{ func.name }}(ctx, &biz.{{ func.request_struct }}Param{
+  {% for parameter in func.request_parameters %}{% if (parameter.tp == "array" or parameter.tp == "object") and parameter.sub_tp == "object" %}  {{ parameter.name | camel_case_upper }}{{": util.BulkProto2Biz[*v1." ~ func.request_struct ~ "_" ~ parameter.sub_ty ~ ", *biz." ~ parameter.sub_ty ~ "](req." }}{{ parameter.name | camel_case_upper }}),{% else %}  {{ parameter.name | camel_case_upper }}: req.{{ parameter.name | camel_case_upper }},{% endif %}
+  {% endfor %}})
+  if err != nil {
+    return nil, err
+  }
+  return &v1.{{ func.return_type }}{
+  {% for parameter in func.response_parameters %}{% if (parameter.tp == "array" or parameter.tp == "object") and parameter.sub_tp == "object" %}  {{ parameter.name | camel_case_upper
+ }}{{ ": util.BulkItem2Proto[*biz." ~ parameter.sub_ty ~ ", *v1." ~ parameter.sub_proto_ty ~ "](reply." }}{{ parameter.name | camel_case_upper }}),{% else %}  {{ parameter.name | camel_case_upper }}: reply.{{ parameter.name | camel_case_upper }},{% endif %}
+  {% endfor %}}, nil
+}
+{% endfor %}

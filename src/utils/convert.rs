@@ -33,3 +33,32 @@ pub fn insert_if_absent(map: &mut HashMap<String, String>, key: String, value: S
         }
     }
 }
+
+pub fn insert_underscore_after_substring(s: &str, sub: &str) -> String {
+    // 检查主字符串中是否包含子字符串
+    if let Some(index) = s.find(sub) {
+        // 计算插入位置，即子字符串的末尾
+        let insert_pos = index + sub.len();
+
+        // 将字符串分为两部分，拼接下划线
+        let (before, after) = s.split_at(insert_pos);
+        format!("{}{}{}", before, "_", after)
+    } else {
+        // 如果子字符串不在主字符串中，返回原字符串
+        s.to_string()
+    }
+}
+
+pub fn remove_substring(s: &str, sub: &str) -> String {
+    // 查找子字符串的起始索引
+    if let Some(index) = s.find(sub) {
+        // 计算子字符串的末尾位置
+        let start_of_remaining = index + sub.len();
+
+        // 截取剩余的部分
+        let remaining = &s[start_of_remaining..];
+        return remaining.to_string(); // 返回剩余部分
+    }
+    // 如果子字符串不在主字符串中，返回原字符串
+    s.to_string()
+}

@@ -16,8 +16,8 @@ type {{ service | camel_case_upper }}Repo struct {
   log *log.Helper
 }
 
-func New{{ service | camel_case_upper }}Repo(logger Logger, {{ peer }} {{ peer }}V1.{{ service | camel_case_upper }}Client) biz.{{ service | camel_case_upper }}Repo {
-  return &{{ service | camel_case_upper }}{
+func New{{ service | camel_case_upper }}Repo(logger log.Logger, {{ peer }} {{ peer }}V1.{{ service | camel_case_upper }}Client) biz.{{ service | camel_case_upper }}Repo {
+  return &{{ service | camel_case_upper }}Repo{
     {{ peer }}: {{ peer }},
     log: log.NewHelper(log.With(logger, "module", "data/{{ peer }}")),
   }
@@ -26,14 +26,14 @@ func New{{ service | camel_case_upper }}Repo(logger Logger, {{ peer }} {{ peer }
 {% for func in functions %}
 func (r {{ service | camel_case_upper }}Repo) {{ func.name }}(ctx context.Context, param *biz.{{ func.request_struct }}Param) (*biz.{{ func.return_type }}Param, error) {
   reply, err := r.{{ peer }}.{{ func.name }}(ctx, &{{ peer }}V1.{{ func.request_struct }}{
-  {% for parameter in func.request_parameters %}{% if (parameter.tp == "array" or parameter.tp == "object") and parameter.sub_tp == "object" %}  {{ parameter.name | camel_case_upper }}{{": util.BulkItem2Proto[*biz." ~ parameter.sub_ty ~ ", *v1." ~ parameter.sub_proto_ty ~ "](param." }}{{ parameter.name | camel_case_upper }}),{% else %}  {{ parameter.name | camel_case_upper }}: param.{{ parameter.name | camel_case_upper }},{% endif %}
+  {% for parameter in func.request_parameters %}{% if (parameter.tp == "array" or parameter.tp == "object") and parameter.sub_tp == "object" %}  {{ parameter.name | camel_case_upper }}{{": util.BulkItemBiz2Proto[*biz." ~ parameter.sub_ty ~ ", *" ~ peer ~ "V1." ~ parameter.sub_proto_ty ~ "](param." }}{{ parameter.name | camel_case_upper }}),{% else %}  {{ parameter.name | camel_case_upper }}: param.{{ parameter.name | camel_case_upper }},{% endif %}
   {% endfor %}})
   if err != nil {
     return nil, err
   }
   return &biz.{{ func.return_type }}Param{
   {% for parameter in func.response_parameters %}{% if (parameter.tp == "array" or parameter.tp == "object") and parameter.sub_tp == "object" %}  {{ parameter.name | camel_case_upper
- }}{{ ": util.BulkProto2Biz[*v1." ~ parameter.sub_proto_ty ~ ", *biz." ~ parameter.sub_ty ~ "](reply." }}{{ parameter.name | camel_case_upper }}),{% else %}  {{ parameter.name | camel_case_upper }}: reply.{{ parameter.name | camel_case_upper }},{% endif %}
+ }}{{ ": util.BulkProto2Biz[*" ~ peer ~ "V1." ~ parameter.sub_proto_ty ~ ", *biz." ~ parameter.sub_ty ~ "](reply." }}{{ parameter.name | camel_case_upper }}),{% else %}  {{ parameter.name | camel_case_upper }}: reply.{{ parameter.name | camel_case_upper }},{% endif %}
   {% endfor %}}, nil
 }
 {% endfor %}

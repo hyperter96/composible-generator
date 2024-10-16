@@ -6,6 +6,7 @@ use crate::utils::convert::{
     extract_method_name, insert_if_absent, insert_underscore_after_substring, to_camel_case_upper,
 };
 use crate::utils::filter::{camel_case_filter, camel_case_initial_upper_filter, snake_case_filter};
+use crate::utils::path::{get_absolute_path, get_file_prefix};
 use inflector::cases::camelcase::to_camel_case;
 use std::collections::HashMap;
 use std::fs::File;
@@ -41,7 +42,7 @@ fn get_return_type(schema: &Schema) -> String {
                 if schema.schema.is_none() {
                     "*structpb.ListValue".to_string()
                 } else {
-                    "[]".to_string()
+                    "[]*".to_string()
                         + &get_return_type(
                             schema
                                 .schema
@@ -54,12 +55,13 @@ fn get_return_type(schema: &Schema) -> String {
                 if schema.schema.is_none() {
                     "*structpb.Struct".to_string()
                 } else {
-                    get_return_type(
-                        schema
-                            .schema
-                            .as_ref()
-                            .unwrap_or(&Box::new(Schema::default())),
-                    )
+                    "*".to_string()
+                        + &get_return_type(
+                            schema
+                                .schema
+                                .as_ref()
+                                .unwrap_or(&Box::new(Schema::default())),
+                        )
                 }
             }
             _ => "any".to_string(),
@@ -473,17 +475,32 @@ pub fn generate_biz_from_swagger(args: &Args) -> Result<(), Box<dyn std::error::
     let rendered_service = tera.render("kratos_service_template.tera", &context)?;
     let rendered_data = tera.render("kratos_data_template.tera", &context)?;
 
+    // 获取前缀名
+    let prefix = get_file_prefix(&args.input);
+
     use std::io::Write;
     // Step 8.1: 写入生成的 data_template 文件
-    let mut output_file_data = File::create(args.output.to_string() + "/data.go")?;
+    let mut output_file_data = File::create(format!(
+        "{}/data/{}.go",
+        args.output,
+        prefix.clone().unwrap_or("data".to_string())
+    ))?;
     output_file_data.write_all(rendered_data.as_bytes())?;
 
     // Step 8.2: 写入生成的 service_template 文件
-    let mut output_file_service = File::create(args.output.to_string() + "/service.go")?;
+    let mut output_file_service = File::create(format!(
+        "{}/service/{}.go",
+        args.output,
+        prefix.clone().unwrap_or("service".to_string())
+    ))?;
     output_file_service.write_all(rendered_service.as_bytes())?;
 
     // Step 8.3: 写入生成的 biz_template 文件
-    let mut output_file_biz = File::create(args.output.to_string() + "/biz.go")?;
+    let mut output_file_biz = File::create(format!(
+        "{}/biz/{}.go",
+        args.output,
+        prefix.clone().unwrap_or("biz".to_string())
+    ))?;
     output_file_biz.write_all(rendered_biz.as_bytes())?;
 
     println!("biz层函数已生成到 output/composables/biz.go");
